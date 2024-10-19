@@ -11,12 +11,6 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const cabin = await getCabin(params.cabinId);
 
-  if (!cabin) {
-    return (
-      <div>Sorry, we couldn&#39;t find the cabin you&#39;re looking for.</div>
-    );
-  }
-
   const { id, name, maxCapacity, regularPrice, discount, image, description } =
     cabin;
 
