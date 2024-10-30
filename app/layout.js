@@ -9,6 +9,7 @@ const josefin = Josefin_Sans({
 
 import '@/app/_styles/globals.css';
 import Header from './_components/Header';
+import { ReservationProvider } from './_components/ReservationContext';
 
 export const metadata = {
   title: {
@@ -27,7 +28,10 @@ export default function RootLayout({ children }) {
       >
         <Header />
         <div className="flex-1 px-8 py-12 grid">
-          <main className="max-w-7xl mx-auto w-full">{children}</main>
+          <main className="max-w-7xl mx-auto w-full">
+            {/* Here I am passing a server component into a client component, using children prop. It wouldn't be a problem, because by this time the server components have been already rendered*/}
+            <ReservationProvider>{children}</ReservationProvider>
+          </main>
         </div>
       </body>
     </html>
