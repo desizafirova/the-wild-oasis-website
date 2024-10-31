@@ -11,10 +11,8 @@ const authConfig = {
   ],
   callbacks: {
     authorized({ auth, request }) {
-      // !! triggers everything in a boolean
       return !!auth?.user;
     },
-    // checking if there is an existing guest, if there is not, we create one
     async signIn({ user, account, profile }) {
       try {
         const existingGuest = await getGuest(user.email);
@@ -27,10 +25,9 @@ const authConfig = {
         return false;
       }
     },
-    // runs once after the signIn methods runs, and also each time that the session is checked out.
     async session({ session, user }) {
       const guest = await getGuest(session.user.email);
-      session.user.guestId = guest.guestId;
+      session.user.guestId = guest.id;
       return session;
     },
   },
