@@ -1,10 +1,6 @@
-export async function GET(request, { params }) {
-  if (!params || !params.cabinId) {
-    return new Response(JSON.stringify({ message: 'Missing cabinId' }), {
-      status: 400,
-    });
-  }
+import { getBookedDatesByCabinId, getCabin } from '@/app/_lib/data-service';
 
+export async function GET(request, { params }) {
   const { cabinId } = params;
 
   try {
@@ -13,13 +9,10 @@ export async function GET(request, { params }) {
       getBookedDatesByCabinId(cabinId),
     ]);
 
-    return new Response(JSON.stringify({ cabin, bookedDates }), {
-      status: 200,
-    });
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return new Response(JSON.stringify({ message: 'Cabin not found' }), {
-      status: 404,
-    });
+    return Response.json({ cabin, bookedDates });
+  } catch {
+    return Response.json({ message: 'Cabin not found' });
   }
 }
+
+// export async function POST() {}
