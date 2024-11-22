@@ -1,21 +1,25 @@
-import { getBookedDatesByCabinId, getCabin } from '@/app/_lib/data-service';
-
 export async function GET(request, { params }) {
   if (!params || !params.cabinId) {
-    return Response.json({ message: 'cabinId is required' }, { status: 400 });
+    return new Response(JSON.stringify({ message: 'Missing cabinId' }), {
+      status: 400,
+    });
   }
 
   const { cabinId } = params;
-  console.log(cabinId);
+
   try {
     const [cabin, bookedDates] = await Promise.all([
       getCabin(cabinId),
       getBookedDatesByCabinId(cabinId),
     ]);
 
-    return Response.json({ cabin, bookedDates });
+    return new Response(JSON.stringify({ cabin, bookedDates }), {
+      status: 200,
+    });
   } catch (error) {
     console.error('Error fetching data:', error);
-    return Response.json({ message: 'Cabin not found' }, { status: 404 });
+    return new Response(JSON.stringify({ message: 'Cabin not found' }), {
+      status: 404,
+    });
   }
 }

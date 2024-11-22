@@ -31,9 +31,6 @@ const nextConfig = {
     ],
     unoptimized: process.env.NEXT_STATIC_EXPORT === 'true', // Disable optimization for static exports
   },
-
-  // Static export configuration (conditionally applied)
-  ...(process.env.NEXT_STATIC_EXPORT === 'true' && { output: 'export' }),
 };
 
 export default nextConfig;
